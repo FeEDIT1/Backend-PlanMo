@@ -73,7 +73,7 @@ router.post('/', validaMoveis,
 router.delete("/:id", async(req, res) => {
     await Movel.findByIdAndRemove(req.params.id)
     .then(moveis => {res.send(
-        {message: `Móvel ${moveis.nome} removido com sucesso`}
+        {message: `Móvel ${moveis.movel} removido com sucesso`}
         )
     }).catch(err => {
         return res.status(500).send(

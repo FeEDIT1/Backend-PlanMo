@@ -1,6 +1,6 @@
 //Teste de Requisições REST - Categorias
 @baseURL = http://localhost:4000
-@id = 60b9b9c04877810e95c5fde6
+@id = 60b9bc8f3b32e311ce2a79db
 ##
 // GET - Lista todas as categorias
 GET {{baseURL}}/moveis
