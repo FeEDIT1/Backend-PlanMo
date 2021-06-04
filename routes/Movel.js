@@ -65,6 +65,7 @@ router.post('/', validaMoveis,
        
      } )     
   
+     /** */
 
 /*****************************
  * DELETE /categorias/:id
