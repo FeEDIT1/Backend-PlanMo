@@ -3,7 +3,7 @@ require('dotenv').config() //Carrega as variáveis de ambiente
 const InicializaMongoServer = require('./config/db')
 InicializaMongoServer() //Inicializamos o MongoDB
 //Definindo as rotas do nosso backend
-const rotasCategoria = require('./routes/Categoria')
+const rotasMoveis = require('./routes/Movel')
 const rotasUpload = require('./routes/Upload')
 //Inicializamos o nosso app a partir da biblioteca express
 const app = express()
@@ -30,12 +30,12 @@ app.use(express.json())
 //Definimos a nossa primeira rota
 app.get('/', (req, res) => {
     res.json({
-        mensagem: 'API 100% funcional!👏',
+        mensagem: 'API TA FUNCIONANDO 100%!',
         versao: '1.0.2'
     })
 })
 //Rotas das Categorias
-app.use("/categorias", rotasCategoria)
+app.use('/moveis', rotasMoveis)
 /* Rota do upload */
 app.use('/upload', rotasUpload)
 

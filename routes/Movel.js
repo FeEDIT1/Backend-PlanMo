@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator')
 
-const Categoria = require('../model/Categoria')
+const Movel = require('../model/Movel')
 
 /*****************************
  * GET /categorias/
@@ -12,11 +12,11 @@ const Categoria = require('../model/Categoria')
 
 router.get("/", async(req, res) => {
     try{
-        const categorias = await Categoria.find()
-        res.json(categorias)
+        const moveis = await Movel.find()
+        res.json(moveis)
     }catch (err){
         res.status(500).send({
-            errors: [{message: 'Não foi possível obter as categorias!'}]
+            errors: [{message: 'Não foi possível obter os Móveis!'}]
         })
     }
 })
@@ -27,11 +27,11 @@ router.get("/", async(req, res) => {
  ****************************/
 router.get('/:id', async(req, res)=>{
     try{
-       const categoria = await Categoria.findById(req.params.id)
-       res.json(categoria)
+       const moveis = await Movel.findById(req.params.id)
+       res.json(moveis)
     } catch (err){
       res.status(500).send({
-       errors: [{message: `Não foi possível obter a categoria com o id ${req.params.id}`}]
+       errors: [{message: `Não foi possível obter o Móvel com o id ${req.params.id}`}]
       })
     }
 })
@@ -40,12 +40,14 @@ router.get('/:id', async(req, res)=>{
  * POST /categorias/
  * Inclui uma nova categoria
  ****************************/
-const validaCategoria = [
-    check('nome','Nome da Categoria é obrigatório').not().isEmpty(),
-    check('status','Informe um status válido para categoria').isIn(['ativo','inativo'])
+ const validaMoveis = [
+    check('movel','Nome do Movel é obrigatório').not().isEmpty(),
+    check('comodo','Informe um status válido para categoria').not().isEmpty(),
+    check('cor', 'Por favor, informe a cor desejada!').not().isEmpty(),
+    check('valor','Por favor, insira o valor do Móvel!').not().isEmpty().isNumeric()
 ]
 
-router.post('/', validaCategoria,
+router.post('/', validaMoveis,
   async(req, res)=> {
       const errors = validationResult(req)
       if(!errors.isEmpty()){
@@ -55,33 +57,28 @@ router.post('/', validaCategoria,
       }
       //Verifica se a categoria já existe
       const { nome } = req.body
-      let categoria = await Categoria.findOne({nome})
-      if(categoria)
-        return res.status(200).json({errors:[{message:'Já existe uma categoria com o nome informado!'}]})
-     try{
-         let categoria = new Categoria(req.body)
-         await categoria.save()
-         res.send(categoria)
-     } catch (err){
-         return res.status(500).json({
-             errors: [{message: `Erro ao salvar a categoria: ${err.message}`}]
-         })
-     }      
-  })
+     
+         let moveis = new Movel(req.body)
+         await moveis.save()
+         res.send(moveis)
+     
+       
+     } )     
+  
 
 /*****************************
  * DELETE /categorias/:id
  * Apaga a categoria pelo id informado
  ****************************/
 router.delete("/:id", async(req, res) => {
-    await Categoria.findByIdAndRemove(req.params.id)
-    .then(categoria => {res.send(
-        {message: `Categoria ${categoria.nome} removida com sucesso`}
+    await Movel.findByIdAndRemove(req.params.id)
+    .then(moveis => {res.send(
+        {message: `Móvel ${moveis.nome} removido com sucesso`}
         )
     }).catch(err => {
         return res.status(500).send(
             {errors: 
-            [{message: `Não foi possível apagar a categoria com o id ${req.params.id}`}]
+            [{message: `Não foi possível apagar o Móvel com o id ${req.params.id}`}]
             })
     })
 })
@@ -90,7 +87,7 @@ router.delete("/:id", async(req, res) => {
  * PUT /categorias
  * Altera os dados da categoria informada
  *******************************************/
-router.put('/', validaCategoria,
+router.put('/', validaMoveis,
 async(req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()){
@@ -99,15 +96,15 @@ async(req, res) => {
         })
     }
     let dados = req.body
-    await Categoria.findByIdAndUpdate(req.body._id, {
+    await Movel.findByIdAndUpdate(req.body._id, {
         $set: dados
     },{new: true})
-    .then(categoria => {
-        res.send({message: `Categoria ${categoria.nome} alterada com sucesso!`})
+    .then(moveis => {
+        res.send({message: `Móvel ${moveis.nome} alterado com sucesso!`})
     }).catch(err => {
         return res.status(500).send({
             errors: [{
-        message:`Não foi possível alterar a categoria com o id ${req.body._id}`}]
+        message:`Não foi possível alterar o Móvel com o id ${req.body._id}`}]
         })
     })
 })

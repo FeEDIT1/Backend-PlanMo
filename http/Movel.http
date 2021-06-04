@@ -1,51 +1,47 @@
 //Teste de Requisições REST - Categorias
 @baseURL = http://localhost:4000
-@id = 609043ac602c7f03076304f5
-###
+@id = 60b9b9c04877810e95c5fde6
+##
 // GET - Lista todas as categorias
-GET {{baseURL}}/categorias
+GET {{baseURL}}/moveis
 Content-Type: application/json
 
 ###
 // GET - Lista apenas uma categoria pelo id
-GET {{baseURL}}/categorias/{{id}}
-Content-Type: application/json
-
-###
-// GET - Lista apenas uma categoria pelo id - INVÁLIDO
-GET {{baseURL}}/categorias/44
+GET {{baseURL}}/moveis/{{id}}
 Content-Type: application/json
 
 ###
 // POST - Inclui uma nova categoria
-POST {{baseURL}}/categorias
+POST {{baseURL}}/moveis
 Content-Type: application/json
 
 {
-    "nome": "Churrascarias",
-    "status": "ativo"
+    "movel": "sofá",
+    "comodo": "sala",
+    "cor": "preto",
+    "tamanho": "grande",
+    "valor": 212
 }
 
 ### 
 // DELETE - Apaga uma categoria através do id informado
-DELETE {{baseURL}}/categorias/{{id}}
+DELETE {{baseURL}}/moveis/{{id}}
 Content-Type: application/json
 
 ###
 // PUT - Altera uma categoria pelo ID
-PUT {{baseURL}}/categorias
+PUT {{baseURL}}/moveis
 Content-Type: application/json
 
 {
-    "_id": "6090376b1f4ecc016577707e", 
-    "nome": "Cantinas Italianas",
-    "status": "ativo"
+   
 }
 
 
 ###
 // PUT - Altera uma categoria pelo ID - INVÁLIDO
-PUT {{baseURL}}/categorias
+PUT {{baseURL}}/moveis
 Content-Type: application/json
 
 {
