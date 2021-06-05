@@ -17,11 +17,13 @@ POST {{baseURL}}/moveis
 Content-Type: application/json
 
 {
+    
     "nomeMovel": "Cama",
     "lugar": "quarto",
     "cor": "Verde",
     "tamanho": "grande",
     "valor": 250
+    
 }
 
 ### 
