@@ -1,9 +1,8 @@
-// API REST das Categorias
 const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator')
 
-const Movel = require('../model/Movel')
+const MovelModel = require('../model/Movel')
 
 /*****************************
  * GET /categorias/
@@ -12,7 +11,7 @@ const Movel = require('../model/Movel')
 
 router.get("/", async(req, res) => {
     try{
-        const moveis = await Movel.find()
+        const moveis = await MovelModel.find()
         res.json(moveis)
     }catch (err){
         res.status(500).send({
@@ -27,11 +26,11 @@ router.get("/", async(req, res) => {
  ****************************/
 router.get('/:id', async(req, res)=>{
     try{
-       const moveis = await Movel.findById(req.params.id)
+       const moveis = await MovelModel.findById(req.params.id)
        res.json(moveis)
     } catch (err){
       res.status(500).send({
-       errors: [{message: `Não foi possível obter o Móvel com o id ${req.params.id}`}]
+       errors: [{message: `Não foi possível obter o móvel com o id ${req.params.id}`}]
       })
     }
 })
@@ -40,14 +39,15 @@ router.get('/:id', async(req, res)=>{
  * POST /categorias/
  * Inclui uma nova categoria
  ****************************/
- const validaMoveis = [
-    check('movel','Nome do Movel é obrigatório').not().isEmpty(),
-    check('comodo','Informe um status válido para categoria').not().isEmpty(),
-    check('cor', 'Por favor, informe a cor desejada!').not().isEmpty(),
-    check('valor','Por favor, insira o valor do Móvel!').not().isEmpty().isNumeric()
+const validaMovel = [
+    check('nomeMovel','Nome do Móvel é obrigatório').not().isEmpty(),
+    check('lugar','Informe o lugar em que o móvel será colocado!').not().isEmpty(),
+    check('cor','Cor do Móvel é obrigatório').not().isEmpty(),
+    check('tamanho','tamanho do Móvel é obrigatório').not().isEmpty(),
+    check('valor','valor do Móvel é obrigatório').not().isEmpty()
 ]
 
-router.post('/', validaMoveis,
+router.post('/', validaMovel,
   async(req, res)=> {
       const errors = validationResult(req)
       if(!errors.isEmpty()){
@@ -55,26 +55,21 @@ router.post('/', validaMoveis,
               errors: errors.array()
           })
       }
-      //Verifica se a categoria já existe
-      const { nome } = req.body
-     
-         let moveis = new Movel(req.body)
+      
+         let moveis = new MovelModel(req.body)
          await moveis.save()
          res.send(moveis)
-     
-       
-     } )     
-  
-     /** */
+ 
+  })
 
 /*****************************
  * DELETE /categorias/:id
  * Apaga a categoria pelo id informado
  ****************************/
 router.delete("/:id", async(req, res) => {
-    await Movel.findByIdAndRemove(req.params.id)
+    await MovelModel.findByIdAndRemove(req.params.id)
     .then(moveis => {res.send(
-        {message: `Móvel ${moveis.movel} removido com sucesso`}
+        {message: `Móvel ${moveis.nome} removido com sucesso`}
         )
     }).catch(err => {
         return res.status(500).send(
@@ -88,7 +83,7 @@ router.delete("/:id", async(req, res) => {
  * PUT /categorias
  * Altera os dados da categoria informada
  *******************************************/
-router.put('/', validaMoveis,
+router.put('/', validaMovel,
 async(req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()){
@@ -97,11 +92,11 @@ async(req, res) => {
         })
     }
     let dados = req.body
-    await Movel.findByIdAndUpdate(req.body._id, {
+    await MovelModel.findByIdAndUpdate(req.body._id, {
         $set: dados
     },{new: true})
     .then(moveis => {
-        res.send({message: `Móvel ${moveis.nome} alterado com sucesso!`})
+        res.send({message: `Móvel ${moveis.nome} alterada com sucesso!`})
     }).catch(err => {
         return res.status(500).send({
             errors: [{
@@ -109,6 +104,4 @@ async(req, res) => {
         })
     })
 })
-
-
 module.exports = router

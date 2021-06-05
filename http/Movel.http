@@ -1,6 +1,6 @@
 //Teste de Requisições REST - Categorias
 @baseURL = http://localhost:4000
-@id = 60b9bc8f3b32e311ce2a79db
+@id = 60babe2f036c2e04d22a82a4
 ##
 // GET - Lista todas as categorias
 GET {{baseURL}}/moveis
@@ -17,11 +17,11 @@ POST {{baseURL}}/moveis
 Content-Type: application/json
 
 {
-    "movel": "sofá",
-    "comodo": "sala",
-    "cor": "preto",
+    "nomeMovel": "Cama",
+    "lugar": "quarto",
+    "cor": "Verde",
     "tamanho": "grande",
-    "valor": 212
+    "valor": 250
 }
 
 ### 

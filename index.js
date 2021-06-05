@@ -3,7 +3,7 @@ require('dotenv').config() //Carrega as variáveis de ambiente
 const InicializaMongoServer = require('./config/db')
 InicializaMongoServer() //Inicializamos o MongoDB
 //Definindo as rotas do nosso backend
-const rotasMoveis = require('./routes/Movel')
+const rotasMovel = require('./routes/Movel')
 const rotasUpload = require('./routes/Upload')
 //Inicializamos o nosso app a partir da biblioteca express
 const app = express()
@@ -30,12 +30,12 @@ app.use(express.json())
 //Definimos a nossa primeira rota
 app.get('/', (req, res) => {
     res.json({
-        mensagem: 'API TA FUNCIONANDO 100%!',
+        mensagem: 'API 100% funcional!👏',
         versao: '1.0.2'
     })
 })
 //Rotas das Categorias
-app.use('/moveis', rotasMoveis)
+app.use("/moveis", rotasMovel)
 /* Rota do upload */
 app.use('/upload', rotasUpload)
 
@@ -46,8 +46,6 @@ app.use(function(req, res){
         mensagem: `A rota ${req.originalUrl} não existe!`
     })
 })
-
 app.listen(PORT, (req, res) => {
     console.log(`💻 Servidor Web rodando na porta ${PORT}`)
-}
-)
+})
