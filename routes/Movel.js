@@ -44,7 +44,7 @@ const validaMovel = [
     check('lugar','Informe o lugar em que o móvel será colocado!').not().isEmpty(),
     check('cor','Cor do Móvel é obrigatório').not().isEmpty(),
     check('tamanho','tamanho do Móvel é obrigatório').not().isEmpty(),
-    check('valor','valor do Móvel é obrigatório').not().isEmpty()
+    check('valor','valor do Móvel é obrigatório').not().isEmpty().isAlphanumeric()
 ]
 
 router.post('/', validaMovel,
@@ -55,10 +55,15 @@ router.post('/', validaMovel,
               errors: errors.array()
           })
       }
-      
+      try{
          let moveis = new MovelModel(req.body)
          await moveis.save()
          res.send(moveis)
+      } catch(err){
+        return res.status(500).json({
+            errors: [{message: `Erro ao salvar a categoria: ${err.message}`}]
+        })
+      }
  
   })
 
