@@ -1,15 +1,12 @@
-# Backend em NodeJS
+# Backend/Frontend em ReactJS
 ## _Fatec Itu_
 
-Projeto Backend em NodeJS integrado ao MongoDB.
+Projeto de Frontend em ReactJS consumindo o Backend em NodeJS integrado ao MongoDB.
 
-- Clone o projeto (git clone https://github.com/ricardoleme/backend.git)
-- Renomeie o arquivo .env-exemplo para .env e informe a string de conexão do MongoDB
-- Inicialize o servidor na porta 4000
-- Aponte o navegador em http://localhost:4000
+Planejamento de Móveis utilizando o banco de dados como organizador de
+comodos, o próprio móvel, cor, valor e tamanho!
+os integrantes são:
 
-## Licença
-
-MIT
-
-**Free Software, Hell Yeah!🐧** 
+Felipe Eduardo de Souza Honorato  
+e
+Kauane do Carmo Almeida
